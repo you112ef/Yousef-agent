@@ -75,7 +75,7 @@ class PerformanceMonitor {
 
     // Log slow API calls
     if (duration > 3000) {
-      logger.warn(`Slow API call: ${method} ${endpoint}`, undefined, {
+      logger.warn(`Slow API call: ${method} ${endpoint}`, {
         duration,
         statusCode,
       })

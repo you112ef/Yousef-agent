@@ -18,6 +18,9 @@
     "test:run": "vitest run",
     "test:coverage": "vitest run --coverage",
     "setup": "node scripts/setup-env.js",
+    "env:add": "bash scripts/add-env-vars.sh",
+    "env:pull": "vercel env pull .env.local",
+    "deploy": "bash scripts/deploy-vercel.sh",
     "prepare": "husky"
   },
   "dependencies": {

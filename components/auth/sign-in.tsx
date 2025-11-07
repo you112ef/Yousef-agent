@@ -25,29 +25,24 @@ export function SignIn() {
         throw new Error('Vercel sign-in is only available when deployed on Vercel.')
       }
 
-      // Check if Vercel auth is configured
+      // Check if Vercel auth is configured (but allow user to try anyway)
       if (!isVercelAuthConfigured()) {
-        throw new Error('Vercel authentication is not properly configured. Please contact the administrator.')
-      }
-
-      // Check if the auth endpoint is working
-      try {
-        const response = await fetch('/api/auth/info', { method: 'HEAD' })
-        if (response.status === 500) {
-          throw new Error('Authentication service is temporarily unavailable.')
+        const shouldContinue = confirm(
+          'Vercel sign-in may not be fully configured. Would you like to try anyway? If it fails, please use GitHub sign-in.'
+        )
+        if (!shouldContinue) {
+          setLoadingVercel(false)
+          return
         }
-      } catch (error) {
-        console.warn('Auth endpoint check failed:', error)
-        // Don't fail completely, just log it
       }
 
       await redirectToSignIn()
     } catch (error) {
       console.error('Failed to redirect to Vercel sign in:', error)
       setLoadingVercel(false)
-      // Show a detailed error message
+      // Show a more helpful error message with alternative
       const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred'
-      alert(`Vercel Sign-in Error: ${errorMessage}\n\nIf this problem persists, try using GitHub sign-in instead.`)
+      alert(`Vercel Sign-in Issue: ${errorMessage}\n\nPlease try using GitHub sign-in instead, or contact the administrator to configure Vercel OAuth.`)
     }
   }
 
@@ -76,17 +71,15 @@ export function SignIn() {
             <DialogDescription>
               {(() => {
                 const messages = []
-                if (hasVercel) {
-                  if (isOnVercel() && isVercelAuthConfigured()) {
-                    messages.push('Vercel authentication is available')
-                  } else if (!isOnVercel()) {
-                    messages.push('Vercel sign-in requires deployment on Vercel')
-                  } else {
-                    messages.push('Vercel authentication is not configured')
-                  }
-                }
                 if (hasGitHub) {
-                  messages.push('GitHub authentication is available')
+                  messages.push('✅ GitHub authentication: Ready to use')
+                }
+                if (hasVercel) {
+                  if (isOnVercel()) {
+                    messages.push('⚠️ Vercel authentication: Try now (may need configuration)')
+                  } else {
+                    messages.push('⚠️ Vercel sign-in requires deployment on Vercel')
+                  }
                 }
                 return messages.length > 0 ? messages.join(' • ') : 'No authentication providers are configured.'
               })()}
@@ -94,6 +87,50 @@ export function SignIn() {
           </DialogHeader>
 
           <div className="flex flex-col gap-3 py-4">
+            {/* Show GitHub first as it's the recommended option */}
+            {hasGitHub && (
+              <Button
+                onClick={handleGitHubSignIn}
+                disabled={loadingVercel || loadingGitHub}
+                variant="default"
+                size="lg"
+                className="w-full"
+              >
+                {loadingGitHub ? (
+                  <>
+                    <svg
+                      className="animate-spin -ml-1 mr-2 h-4 w-4"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      ></circle>
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                      ></path>
+                    </svg>
+                    Loading...
+                  </>
+                ) : (
+                  <>
+                    <GitHubIcon className="h-4 w-4 mr-2" />
+                    Sign in with GitHub ✅
+                  </>
+                )}
+              </Button>
+            )}
+
+            <div className="text-center text-xs text-muted-foreground">or</div>
+
             {hasVercel && (
               <Button
                 onClick={handleVercelSignIn}
@@ -131,52 +168,16 @@ export function SignIn() {
                     <svg viewBox="0 0 76 65" className="h-3 w-3 mr-2" fill="currentColor">
                       <path d="M37.5274 0L75.0548 65H0L37.5274 0Z" />
                     </svg>
-                    Sign in with Vercel
+                    Sign in with Vercel ⚠️
                   </>
                 )}
               </Button>
             )}
+          </div>
 
-            {hasGitHub && (
-              <Button
-                onClick={handleGitHubSignIn}
-                disabled={loadingVercel || loadingGitHub}
-                variant="outline"
-                size="lg"
-                className="w-full"
-              >
-                {loadingGitHub ? (
-                  <>
-                    <svg
-                      className="animate-spin -ml-1 mr-2 h-4 w-4"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                    >
-                      <circle
-                        className="opacity-25"
-                        cx="12"
-                        cy="12"
-                        r="10"
-                        stroke="currentColor"
-                        strokeWidth="4"
-                      ></circle>
-                      <path
-                        className="opacity-75"
-                        fill="currentColor"
-                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                      ></path>
-                    </svg>
-                    Loading...
-                  </>
-                ) : (
-                  <>
-                    <GitHubIcon className="h-4 w-4 mr-2" />
-                    Sign in with GitHub
-                  </>
-                )}
-              </Button>
-            )}
+          <div className="text-xs text-muted-foreground mt-2">
+            💡 <strong>Tip:</strong> GitHub sign-in is fully configured and ready to use.
+            {hasVercel && !isVercelAuthConfigured() && ' Vercel sign-in may require additional configuration.'}
           </div>
         </DialogContent>
       </Dialog>

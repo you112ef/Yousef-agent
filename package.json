@@ -17,6 +17,7 @@
     "test": "vitest",
     "test:run": "vitest run",
     "test:coverage": "vitest run --coverage",
+    "setup": "node scripts/setup-env.js",
     "prepare": "husky"
   },
   "dependencies": {

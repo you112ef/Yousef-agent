@@ -2,8 +2,19 @@
   "functions": {
     "app/api/tasks/route.ts": {
       "maxDuration": 300
+    },
+    "app/api/ws/route.ts": {
+      "maxDuration": 300
     }
   },
-  "crons": []
+  "crons": [],
+  "env": {
+    "NODE_ENV": "production"
+  },
+  "build": {
+    "env": {
+      "NODE_ENV": "production"
+    }
+  }
 }
 

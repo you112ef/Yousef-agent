@@ -116,18 +116,88 @@ const AGENT_MODELS = {
     { value: 'claude-opus-4-1-20250805', label: 'Opus 4.1' },
   ],
   cline: [
+    // Claude models
     { value: 'openrouter/claude-3-5-sonnet', label: 'Claude 3.5 Sonnet' },
+    { value: 'openrouter/claude-3-5-haiku', label: 'Claude 3.5 Haiku' },
+    { value: 'openrouter/claude-3-opus', label: 'Claude 3 Opus' },
+    { value: 'openrouter/claude-3-sonnet', label: 'Claude 3 Sonnet' },
     { value: 'openrouter/claude-3-haiku', label: 'Claude 3 Haiku' },
-    { value: 'openrouter/gpt-4o', label: 'GPT-4o' },
-    { value: 'openrouter/gpt-4o-mini', label: 'GPT-4o Mini' },
-    { value: 'openrouter/gemini-pro-1.5', label: 'Gemini Pro 1.5' },
+    // OpenAI GPT models
+    { value: 'openrouter/openai/gpt-4o', label: 'GPT-4o' },
+    { value: 'openrouter/openai/gpt-4o-mini', label: 'GPT-4o Mini' },
+    { value: 'openrouter/openai/gpt-4-turbo', label: 'GPT-4 Turbo' },
+    { value: 'openrouter/openai/gpt-4', label: 'GPT-4' },
+    { value: 'openrouter/openai/gpt-3.5-turbo', label: 'GPT-3.5 Turbo' },
+    // Google Gemini models
+    { value: 'openrouter/google/gemini-2.5-pro', label: 'Gemini 2.5 Pro' },
+    { value: 'openrouter/google/gemini-2.5-flash', label: 'Gemini 2.5 Flash' },
+    { value: 'openrouter/google/gemini-1.5-pro', label: 'Gemini 1.5 Pro' },
+    { value: 'openrouter/google/gemini-1.5-flash', label: 'Gemini 1.5 Flash' },
+    // Meta Llama models
+    { value: 'openrouter/meta-llama/llama-3.3-70b-instruct', label: 'Llama 3.3 70B' },
+    { value: 'openrouter/meta-llama/llama-3.1-405b-instruct', label: 'Llama 3.1 405B' },
+    { value: 'openrouter/meta-llama/llama-3.1-70b-instruct', label: 'Llama 3.1 70B' },
+    { value: 'openrouter/meta-llama/llama-3.1-8b-instruct', label: 'Llama 3.1 8B' },
+    { value: 'openrouter/meta-llama/llama-3-70b-instruct', label: 'Llama 3 70B' },
+    { value: 'openrouter/meta-llama/llama-3-8b-instruct', label: 'Llama 3 8B' },
+    // Mistral models
+    { value: 'openrouter/mistralai/mistral-large-latest', label: 'Mistral Large' },
+    { value: 'openrouter/mistralai/mistral-medium-latest', label: 'Mistral Medium' },
+    { value: 'openrouter/mistralai/mixtral-8x22b', label: 'Mixtral 8x22B' },
+    { value: 'openrouter/mistralai/mixtral-8x7b', label: 'Mixtral 8x7B' },
+    { value: 'openrouter/mistralai/mixtral-7b', label: 'Mixtral 7B' },
+    // Qwen models
+    { value: 'openrouter/qwen/qwen-2.5-coder-32b-instruct', label: 'Qwen 2.5 Coder 32B' },
+    { value: 'openrouter/qwen/qwen-2.5-coder-7b-instruct', label: 'Qwen 2.5 Coder 7B' },
+    { value: 'openrouter/qwen/qwen-2.5-72b-instruct', label: 'Qwen 2.5 72B' },
+    { value: 'openrouter/qwen/qwen-2.5-32b-instruct', label: 'Qwen 2.5 32B' },
+    { value: 'openrouter/qwen/qwen-2.5-7b-instruct', label: 'Qwen 2.5 7B' },
+    // DeepSeek models
+    { value: 'openrouter/deepseek/deepseek-coder', label: 'DeepSeek Coder' },
+    { value: 'openrouter/deepseek/deepseek-chat', label: 'DeepSeek Chat' },
+    // Other popular models
+    { value: 'openrouter/anthropic/claude-3.5-sonnet', label: 'Claude 3.5 Sonnet (Alternative)' },
+    { value: 'openrouter/openai/gpt-4.1', label: 'GPT-4.1' },
   ],
   kilo: [
+    // Premium Claude models
     { value: 'openrouter/claude-3-5-sonnet', label: 'Claude 3.5 Sonnet' },
+    { value: 'openrouter/claude-3-5-haiku', label: 'Claude 3.5 Haiku' },
     { value: 'openrouter/claude-3-opus', label: 'Claude 3 Opus' },
-    { value: 'openrouter/gpt-4-turbo', label: 'GPT-4 Turbo' },
-    { value: 'openrouter/llama-3-70b-instruct', label: 'Llama 3 70B' },
-    { value: 'openrouter/mixtral-8x7b', label: 'Mixtral 8x7B' },
+    { value: 'openrouter/claude-3-sonnet', label: 'Claude 3 Sonnet' },
+    { value: 'openrouter/claude-3-haiku', label: 'Claude 3 Haiku' },
+    // Latest OpenAI models
+    { value: 'openrouter/openai/gpt-4o', label: 'GPT-4o' },
+    { value: 'openrouter/openai/gpt-4o-mini', label: 'GPT-4o Mini' },
+    { value: 'openrouter/openai/gpt-4-turbo', label: 'GPT-4 Turbo' },
+    { value: 'openrouter/openai/gpt-4.1', label: 'GPT-4.1' },
+    { value: 'openrouter/openai/gpt-3.5-turbo', label: 'GPT-3.5 Turbo' },
+    // Google Gemini series
+    { value: 'openrouter/google/gemini-2.5-pro', label: 'Gemini 2.5 Pro' },
+    { value: 'openrouter/google/gemini-2.5-flash', label: 'Gemini 2.5 Flash' },
+    { value: 'openrouter/google/gemini-1.5-pro', label: 'Gemini 1.5 Pro' },
+    { value: 'openrouter/google/gemini-1.5-flash', label: 'Gemini 1.5 Flash' },
+    // Meta Llama ecosystem
+    { value: 'openrouter/meta-llama/llama-3.3-70b-instruct', label: 'Llama 3.3 70B' },
+    { value: 'openrouter/meta-llama/llama-3.1-405b-instruct', label: 'Llama 3.1 405B' },
+    { value: 'openrouter/meta-llama/llama-3.1-70b-instruct', label: 'Llama 3.1 70B' },
+    { value: 'openrouter/meta-llama/llama-3.1-8b-instruct', label: 'Llama 3.1 8B' },
+    { value: 'openrouter/meta-llama/llama-3-70b-instruct', label: 'Llama 3 70B' },
+    { value: 'openrouter/meta-llama/llama-3-8b-instruct', label: 'Llama 3 8B' },
+    // Mistral AI models
+    { value: 'openrouter/mistralai/mistral-large-latest', label: 'Mistral Large' },
+    { value: 'openrouter/mistralai/mistral-medium-latest', label: 'Mistral Medium' },
+    { value: 'openrouter/mistralai/mixtral-8x22b', label: 'Mixtral 8x22B' },
+    { value: 'openrouter/mistralai/mixtral-8x7b', label: 'Mixtral 8x7B' },
+    { value: 'openrouter/mistralai/mixtral-7b', label: 'Mixtral 7B' },
+    // Cohere models
+    { value: 'openrouter/cohere/command-r-plus', label: 'Command R+' },
+    { value: 'openrouter/cohere/command-r', label: 'Command R' },
+    // Perplexity models
+    { value: 'openrouter/perplexity/llama-3.1-sonar-small-128k-online', label: 'Sonar Small 128K Online' },
+    { value: 'openrouter/perplexity/llama-3.1-sonar-large-128k-online', label: 'Sonar Large 128K Online' },
+    { value: 'openrouter/perplexity/llama-3.1-sonar-small-128k-chat', label: 'Sonar Small 128K Chat' },
+    { value: 'openrouter/perplexity/llama-3.1-sonar-large-128k-chat', label: 'Sonar Large 128K Chat' },
   ],
 } as const
 
@@ -139,7 +209,7 @@ const DEFAULT_MODELS = {
   cursor: 'auto',
   gemini: 'gemini-2.5-pro',
   cline: 'openrouter/claude-3-5-sonnet',
-  kilo: 'openrouter/claude-3-5-sonnet',
+  kilo: 'openrouter/openai/gpt-4o',
   opencode: 'gpt-5',
 } as const
 

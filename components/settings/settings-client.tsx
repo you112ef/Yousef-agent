@@ -13,7 +13,6 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { Separator } from '@/components/ui/separator'
 import { toast } from 'sonner'
-import { PageHeader } from '@/components/page-header'
 import {
   User,
   Key,
@@ -50,10 +49,12 @@ export function SettingsClient({ user }: SettingsClientProps) {
 
   return (
     <div className="container mx-auto py-6 space-y-6">
-      <PageHeader
-        title="Settings"
-        description="Manage your account settings and preferences"
-      />
+      <div className="mb-6">
+        <h1 className="text-3xl font-bold tracking-tight">Settings</h1>
+        <p className="text-muted-foreground mt-2">
+          Manage your account settings and preferences
+        </p>
+      </div>
 
       <Tabs defaultValue="profile" className="space-y-6">
         <TabsList className="grid w-full grid-cols-6">

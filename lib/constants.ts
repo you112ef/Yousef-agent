@@ -23,9 +23,16 @@ export const isOnVercel = () => {
 
 // Check if Vercel auth is properly configured
 export const isVercelAuthConfigured = () => {
+  if (typeof window !== 'undefined') {
+    // Client-side: use NEXT_PUBLIC_ variables
+    return Boolean(
+      process.env.NEXT_PUBLIC_VERCEL_CLIENT_ID &&
+      process.env.VERCEL_CLIENT_SECRET
+    )
+  }
+  // Server-side: use regular variables
   return Boolean(
     process.env.VERCEL_CLIENT_ID &&
-    process.env.VERCEL_CLIENT_SECRET &&
-    process.env.VERCEL_REDIRECT_URI
+    process.env.VERCEL_CLIENT_SECRET
   )
 }

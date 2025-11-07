@@ -71,7 +71,7 @@ Set up a PostgreSQL database (Neon, Supabase, or Railway):
 2. Create a new OAuth App
 3. Set callback URL to: `https://your-domain.vercel.app/api/auth/callback/github`
 4. Get:
-   - **GITHUB_CLIENT_ID** = `your-github-client-id`
+   - **NEXT_PUBLIC_GITHUB_CLIENT_ID** = `your-github-client-id` (with NEXT_PUBLIC_ prefix)
    - **GITHUB_CLIENT_SECRET** = `your-github-client-secret`
 
 #### Vercel OAuth:
@@ -79,8 +79,14 @@ Set up a PostgreSQL database (Neon, Supabase, or Railway):
 2. Create a new OAuth application
 3. Set callback URL to: `https://your-domain.vercel.app/api/auth/callback/vercel`
 4. Get:
-   - **VERCEL_CLIENT_ID** = `your-vercel-client-id`
+   - **NEXT_PUBLIC_VERCEL_CLIENT_ID** = `your-vercel-client-id` (with NEXT_PUBLIC_ prefix)
    - **VERCEL_CLIENT_SECRET** = `your-vercel-client-secret`
+
+#### Authentication Provider Configuration:
+1. Configure which authentication providers to enable:
+   - **NEXT_PUBLIC_AUTH_PROVIDERS** = `github` (GitHub only)
+   - **NEXT_PUBLIC_AUTH_PROVIDERS** = `vercel` (Vercel only)
+   - **NEXT_PUBLIC_AUTH_PROVIDERS** = `github,vercel` (Both providers)
 
 ### 4. 🤖 AI API Keys (Optional but Recommended)
 
@@ -124,6 +130,11 @@ vercel --prod
 vercel env add POSTGRES_URL
 vercel env add JWE_SECRET
 vercel env add ENCRYPTION_KEY
+vercel env add NEXT_PUBLIC_AUTH_PROVIDERS
+vercel env add NEXT_PUBLIC_GITHUB_CLIENT_ID
+vercel env add GITHUB_CLIENT_SECRET
+vercel env add NEXT_PUBLIC_VERCEL_CLIENT_ID
+vercel env add VERCEL_CLIENT_SECRET
 # ... add all other variables
 ```
 
@@ -190,7 +201,8 @@ vercel env add VERCEL_CLIENT_SECRET production
 
 | Variable | Current Value | What to Do | Priority |
 |----------|--------------|------------|----------|
-| `VERCEL_CLIENT_SECRET` | `vercel-client-secret-placeholder-optional` | Get from Vercel OAuth app settings | High |
+| `NEXT_PUBLIC_AUTH_PROVIDERS` | ✅ Configured (github,vercel) | Set to: "github", "vercel", or "github,vercel" | High |
+| `VERCEL_CLIENT_SECRET` | `vercel-client-placeholder-optional` | Get from Vercel OAuth app settings | High |
 | `OPENROUTER_API_KEY` | `sk-or-placeholder-openrouter-key-optional` | Get from [openrouter.ai/keys](https://openrouter.ai/keys) | High |
 | `ANTHROPIC_API_KEY` | `sk-ant-your-anthropic-key-here` | Optional - for Claude agent | Low |
 | `OPENAI_API_KEY` | `sk-your-openai-key-here` | Optional - for Codex agent | Low |

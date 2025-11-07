@@ -310,17 +310,27 @@ button {
   }
 
   .glass-card {
-    @apply glass rounded-xl;
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-backdrop);
+    -webkit-backdrop-filter: var(--glass-backdrop);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+    border-radius: 0.75rem;
   }
 
   .glass-button {
-    @apply glass rounded-lg;
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-backdrop);
+    -webkit-backdrop-filter: var(--glass-backdrop);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+    border-radius: 0.5rem;
     transition: all var(--duration-normal) var(--ease-in-out-quart);
   }
 }
 
 .glass-button:hover {
-  @apply scale-105;
+  transform: scale(1.05);
   box-shadow: var(--shadow-glow);
 }
 

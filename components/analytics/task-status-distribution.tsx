@@ -1,7 +1,7 @@
 'use client'
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts'
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, PieLabelRenderProps } from 'recharts'
 
 interface TaskStatusDistributionProps {
   data: Array<{ status: string; count: number; color: string }>
@@ -24,7 +24,10 @@ export function TaskStatusDistribution({ data }: TaskStatusDistributionProps) {
               cy="50%"
               outerRadius={80}
               dataKey="count"
-              label={({ status, percent }) => `${status} ${(percent * 100).toFixed(0)}%`}
+              label={(props: PieLabelRenderProps) => {
+                const { status, percent } = props as any
+                return `${status} ${(percent * 100).toFixed(0)}%`
+              }}
             >
               {data.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={entry.color} />

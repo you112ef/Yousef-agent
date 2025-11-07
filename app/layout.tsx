@@ -6,6 +6,7 @@ import { ThemeProvider } from '@/components/theme-provider'
 import { AppLayoutWrapper } from '@/components/app-layout-wrapper'
 import { SessionProvider } from '@/components/auth/session-provider'
 import { JotaiProvider } from '@/components/providers/jotai-provider'
+import { ErrorBoundary } from '@/components/error/ErrorBoundary'
 import { Analytics } from '@vercel/analytics/react'
 
 const geistSans = Geist({
@@ -32,13 +33,15 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <JotaiProvider>
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-            <SessionProvider />
-            <AppLayoutWrapper>{children}</AppLayoutWrapper>
-            <Toaster />
-          </ThemeProvider>
-        </JotaiProvider>
+        <ErrorBoundary>
+          <JotaiProvider>
+            <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+              <SessionProvider />
+              <AppLayoutWrapper>{children}</AppLayoutWrapper>
+              <Toaster />
+            </ThemeProvider>
+          </JotaiProvider>
+        </ErrorBoundary>
         <Analytics />
       </body>
     </html>

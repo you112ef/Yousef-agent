@@ -6,6 +6,7 @@ import { redirectToSignIn } from '@/lib/session/redirect-to-sign-in'
 import { GitHubIcon } from '@/components/icons/github-icon'
 import { useState } from 'react'
 import { getEnabledAuthProviders } from '@/lib/auth/providers'
+import { isOnVercel, isVercelAuthConfigured } from '@/lib/constants'
 
 export function SignIn() {
   const [showDialog, setShowDialog] = useState(false)
@@ -16,13 +17,50 @@ export function SignIn() {
   const { github: hasGitHub, vercel: hasVercel } = getEnabledAuthProviders()
 
   const handleVercelSignIn = async () => {
-    setLoadingVercel(true)
-    await redirectToSignIn()
+    try {
+      setLoadingVercel(true)
+
+      // Check if we're on Vercel
+      if (!isOnVercel()) {
+        throw new Error('Vercel sign-in is only available when deployed on Vercel.')
+      }
+
+      // Check if Vercel auth is configured
+      if (!isVercelAuthConfigured()) {
+        throw new Error('Vercel authentication is not properly configured. Please contact the administrator.')
+      }
+
+      // Check if the auth endpoint is working
+      try {
+        const response = await fetch('/api/auth/info', { method: 'HEAD' })
+        if (response.status === 500) {
+          throw new Error('Authentication service is temporarily unavailable.')
+        }
+      } catch (error) {
+        console.warn('Auth endpoint check failed:', error)
+        // Don't fail completely, just log it
+      }
+
+      await redirectToSignIn()
+    } catch (error) {
+      console.error('Failed to redirect to Vercel sign in:', error)
+      setLoadingVercel(false)
+      // Show a detailed error message
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred'
+      alert(`Vercel Sign-in Error: ${errorMessage}\n\nIf this problem persists, try using GitHub sign-in instead.`)
+    }
   }
 
   const handleGitHubSignIn = () => {
-    setLoadingGitHub(true)
-    window.location.href = '/api/auth/signin/github'
+    try {
+      setLoadingGitHub(true)
+      window.location.href = '/api/auth/signin/github'
+    } catch (error) {
+      console.error('Failed to redirect to GitHub sign in:', error)
+      setLoadingGitHub(false)
+      // Show a user-friendly error message
+      alert('Failed to initiate GitHub sign in. Please try again.')
+    }
   }
 
   return (
@@ -36,11 +74,22 @@ export function SignIn() {
           <DialogHeader>
             <DialogTitle>Sign in</DialogTitle>
             <DialogDescription>
-              {hasGitHub && hasVercel
-                ? 'Choose how you want to sign in to continue.'
-                : hasVercel
-                  ? 'Sign in with Vercel to continue.'
-                  : 'Sign in with GitHub to continue.'}
+              {(() => {
+                const messages = []
+                if (hasVercel) {
+                  if (isOnVercel() && isVercelAuthConfigured()) {
+                    messages.push('Vercel authentication is available')
+                  } else if (!isOnVercel()) {
+                    messages.push('Vercel sign-in requires deployment on Vercel')
+                  } else {
+                    messages.push('Vercel authentication is not configured')
+                  }
+                }
+                if (hasGitHub) {
+                  messages.push('GitHub authentication is available')
+                }
+                return messages.length > 0 ? messages.join(' • ') : 'No authentication providers are configured.'
+              })()}
             </DialogDescription>
           </DialogHeader>
 

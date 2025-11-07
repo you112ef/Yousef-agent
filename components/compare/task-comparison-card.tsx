@@ -1,6 +1,17 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
+
+// Generate stable random values for mock data to avoid React purity violations
+const generateStableRandom = (seed: string) => {
+  let hash = 0
+  for (let i = 0; i < seed.length; i++) {
+    const char = seed.charCodeAt(i)
+    hash = ((hash << 5) - hash) + char
+    hash = hash & hash // Convert to 32-bit integer
+  }
+  return Math.abs(hash) / 2147483647 // Normalize to 0-1
+}
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -41,7 +52,7 @@ export function TaskComparisonCard({
   const [activeTab, setActiveTab] = useState('overview')
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleLocaleString('en-US', {
+    return new Date(dateString).toLocaleString('en-US', {
       month: 'short',
       day: 'numeric',
       hour: '2-digit',
@@ -55,10 +66,22 @@ export function TaskComparisonCard({
     return `${Math.round(seconds / 60)}m ${Math.round(seconds % 60)}s`
   }
 
-  // Mock data for demonstration
+  // Mock data for demonstration with stable random values
+  const stableFilesChanged = useMemo(() => {
+    if (task.filesChanged) return task.filesChanged
+    const randomValue = generateStableRandom(task.id + 'files')
+    return Math.floor(randomValue * 10) + 5
+  }, [task.id, task.filesChanged])
+
+  const stableDuration = useMemo(() => {
+    if (task.duration) return task.duration
+    const randomValue = generateStableRandom(task.id + 'duration')
+    return Math.floor(randomValue * 300) + 60
+  }, [task.id, task.duration])
+
   const mockLogs = `[${task.agent}] Starting task execution...
 [${task.agent}] Analyzing repository structure...
-[${task.agent}] Identified ${task.filesChanged || Math.floor(Math.random() * 10 + 5)} files to modify
+[${task.agent}] Identified ${stableFilesChanged} files to modify
 [${task.agent}] Implementing changes...
 [${task.agent}] Creating pull request...
 [${task.agent}] Task completed successfully`
@@ -122,7 +145,7 @@ export function TaskComparisonCard({
                   <span className="text-muted-foreground">Duration:</span>
                   <div className="flex items-center gap-1 mt-1">
                     <Clock className="h-3 w-3" />
-                    <span>{formatDuration(task.duration || Math.random() * 300 + 60)}</span>
+                    <span>{formatDuration(stableDuration)}</span>
                   </div>
                 </div>
               </div>

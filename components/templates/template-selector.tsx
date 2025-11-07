@@ -172,7 +172,7 @@ function TemplateSelectorContent({ onTemplateSelect, trigger }: TemplateSelector
               </div>
             ) : (
               <div className="text-center py-8">
-                <Template className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
+                <FileText className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
                 <p className="text-muted-foreground">No templates found</p>
                 <p className="text-sm text-muted-foreground mt-1">
                   Try adjusting your search or filter criteria

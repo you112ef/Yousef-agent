@@ -10,3 +10,22 @@ export const VERCEL_DEPLOY_URL =
 
 // Vercel button URL for markdown
 export const VERCEL_DEPLOY_BUTTON_URL = `[![Deploy with Vercel](https://vercel.com/button)](${VERCEL_DEPLOY_URL})`
+
+// Check if running on Vercel
+export const isOnVercel = () => {
+  if (typeof window === 'undefined') return false
+  return (
+    window.location.hostname.endsWith('.vercel.app') ||
+    window.location.hostname.includes('vercel.app') ||
+    process.env.VERCEL === '1'
+  )
+}
+
+// Check if Vercel auth is properly configured
+export const isVercelAuthConfigured = () => {
+  return Boolean(
+    process.env.VERCEL_CLIENT_ID &&
+    process.env.VERCEL_CLIENT_SECRET &&
+    process.env.VERCEL_REDIRECT_URI
+  )
+}

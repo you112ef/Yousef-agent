@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { StatsCards } from './stats-cards'
 import { TasksOverTimeChart } from './tasks-over-time-chart'
 import { AgentPerformanceChart } from './agent-performance-chart'
@@ -21,27 +21,26 @@ export function AnalyticsDashboard({ userId }: AnalyticsDashboardProps) {
   const [analyticsData, setAnalyticsData] = useState<any>(null)
   const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
-    fetchAnalyticsData()
-  }, [userId])
-
-  const fetchAnalyticsData = async () => {
+  const fetchAnalyticsData = useCallback(async () => {
     try {
       const response = await fetch(`/api/analytics?userId=${userId}`)
       if (response.ok) {
         const data = await response.json()
         setAnalyticsData(data)
       } else {
-        // Mock data for demonstration
-        setAnalyticsData(getMockAnalyticsData())
+        throw new Error('Failed to fetch analytics')
       }
     } catch (error) {
       console.error('Error fetching analytics:', error)
-      setAnalyticsData(getMockAnalyticsData())
+      setAnalyticsData(null)
     } finally {
       setLoading(false)
     }
-  }
+  }, [userId])
+
+  useEffect(() => {
+    fetchAnalyticsData()
+  }, [fetchAnalyticsData])
 
   if (loading) {
     return (
@@ -187,73 +186,3 @@ export function AnalyticsDashboard({ userId }: AnalyticsDashboardProps) {
   )
 }
 
-function getMockAnalyticsData() {
-  return {
-    stats: {
-      totalTasks: 156,
-      completedTasks: 136,
-      successRate: 87.3,
-      avgDuration: '2.4 min',
-      activeTasks: 8,
-      thisWeek: 24
-    },
-    tasksOverTime: [
-      { date: '2024-01-01', tasks: 12 },
-      { date: '2024-01-02', tasks: 19 },
-      { date: '2024-01-03', tasks: 15 },
-      { date: '2024-01-04', tasks: 22 },
-      { date: '2024-01-05', tasks: 18 },
-      { date: '2024-01-06', tasks: 25 },
-      { date: '2024-01-07', tasks: 31 }
-    ],
-    successRate: [
-      { month: 'Jan', rate: 85 },
-      { month: 'Feb', rate: 88 },
-      { month: 'Mar', rate: 82 },
-      { month: 'Apr', rate: 90 },
-      { month: 'May', rate: 87 },
-      { month: 'Jun', rate: 91 }
-    ],
-    statusDistribution: [
-      { status: 'Completed', count: 136, color: '#10b981' },
-      { status: 'Failed', count: 12, color: '#ef4444' },
-      { status: 'Running', count: 8, color: '#f59e0b' }
-    ],
-    topRepositories: [
-      { name: 'my-awesome-project', tasks: 23, success: 91 },
-      { name: 'web-app-frontend', tasks: 18, success: 89 },
-      { name: 'api-server', tasks: 15, success: 93 },
-      { name: 'mobile-app', tasks: 12, success: 85 }
-    ],
-    agentPerformance: [
-      { name: 'Claude', tasks: 45, successRate: 92, avgDuration: '2.1 min' },
-      { name: 'Codex', tasks: 38, successRate: 85, avgDuration: '2.8 min' },
-      { name: 'Copilot', tasks: 32, successRate: 88, avgDuration: '2.3 min' },
-      { name: 'Gemini', tasks: 25, successRate: 84, avgDuration: '2.6 min' }
-    ],
-    agentComparison: [
-      { name: 'Claude Code', successRate: 92, avgDuration: '2.1 min', totalTasks: 45 },
-      { name: 'OpenAI Codex', successRate: 85, avgDuration: '2.8 min', totalTasks: 38 },
-      { name: 'GitHub Copilot', successRate: 88, avgDuration: '2.3 min', totalTasks: 32 },
-      { name: 'Google Gemini', successRate: 84, avgDuration: '2.6 min', totalTasks: 25 }
-    ],
-    recentTasks: [
-      {
-        id: '1',
-        prompt: 'Add user authentication',
-        agent: 'Claude',
-        status: 'completed',
-        duration: '2.1 min',
-        createdAt: '2024-01-07T10:30:00Z'
-      },
-      {
-        id: '2',
-        prompt: 'Fix memory leak',
-        agent: 'Codex',
-        status: 'running',
-        duration: '1.5 min',
-        createdAt: '2024-01-07T10:25:00Z'
-      }
-    ]
-  }
-}

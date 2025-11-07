@@ -15,6 +15,7 @@ interface Task {
   model: string
   status: string
   createdAt: string
+  updatedAt: string
   branchName?: string
 }
 
@@ -57,6 +58,7 @@ export function TaskSelector({ onTaskSelect, trigger }: TaskSelectorProps) {
           model: 'claude-sonnet-4-5-20250929',
           status: 'completed',
           createdAt: '2024-01-07T10:30:00Z',
+          updatedAt: '2024-01-07T10:45:00Z',
           branchName: 'feature/user-auth-A1b2C3'
         },
         {
@@ -66,6 +68,7 @@ export function TaskSelector({ onTaskSelect, trigger }: TaskSelectorProps) {
           model: 'openai/gpt-5',
           status: 'completed',
           createdAt: '2024-01-07T09:15:00Z',
+          updatedAt: '2024-01-07T09:30:00Z',
           branchName: 'fix/memory-leak-X9y8Z7'
         },
         {
@@ -75,6 +78,7 @@ export function TaskSelector({ onTaskSelect, trigger }: TaskSelectorProps) {
           model: 'claude-sonnet-4.5',
           status: 'running',
           createdAt: '2024-01-07T11:00:00Z',
+          updatedAt: '2024-01-07T11:15:00Z',
           branchName: 'feature/dark-mode-B7xQ2w'
         },
         {
@@ -84,6 +88,7 @@ export function TaskSelector({ onTaskSelect, trigger }: TaskSelectorProps) {
           model: 'gemini-2.5-pro',
           status: 'failed',
           createdAt: '2024-01-07T08:45:00Z',
+          updatedAt: '2024-01-07T09:00:00Z',
           branchName: 'perf/db-optimize-M4nR8s'
         }
       ])

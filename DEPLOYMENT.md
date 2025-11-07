@@ -1,5 +1,32 @@
 # 🚀 Yousef Agent - Deployment Guide
 
+## ✅ Current Deployment Status
+
+**Your application is already deployed and live!**
+
+- **Live URL:** https://coding-agent-template-main-39yfeco9c-bades-projects-40452333.vercel.app
+- **Status:** ✅ Deployed and Running
+- **Repository:** https://github.com/you112ef/Yousef-agent
+
+### What's Already Configured ✅
+
+1. ✅ **Essential Security Variables** (auto-generated)
+2. ✅ **Database** (Neon PostgreSQL - connected and working)
+3. ✅ **GitHub OAuth** (sign-in with GitHub works)
+4. ✅ **Application Infrastructure** (all features implemented)
+
+### What Still Needs Setup ⚠️
+
+1. ⚠️ **Vercel OAuth CLIENT_SECRET** (currently placeholder)
+2. ⚠️ **OpenRouter API Key** (required for AI agents - Cline & Kilo)
+3. ⚠️ **Additional AI Providers** (optional: Anthropic, OpenAI, Gemini)
+
+### Quick Setup Guide
+
+See "Updating Environment Variables" section below for instructions on adding the missing API keys.
+
+---
+
 ## Quick Deploy to Vercel
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/you112ef/Yousef-agent&project-name=yousef-agent&repository-name=yousef-agent)
@@ -124,6 +151,70 @@ vercel env add ENCRYPTION_KEY
    - Try signing in with GitHub or Vercel
    - Create a new task
    - Check the analytics dashboard
+
+## Updating Environment Variables (For Your Current Deployment)
+
+Your application is deployed with placeholder values for some environment variables. Here's how to update them:
+
+### Using Vercel Dashboard (Recommended)
+
+1. **Go to Vercel Dashboard:**
+   - Visit [https://vercel.com/dashboard](https://vercel.com/dashboard)
+   - Click on "Yousef Agent" project
+
+2. **Update Environment Variables:**
+   - Go to **Settings** tab
+   - Click on **Environment Variables** in the sidebar
+   - Find the variable you want to update
+   - Click the "Edit" button
+   - Replace the value with your real API key
+   - Click **Save**
+
+3. **Redeploy:**
+   - Go to **Deployments** tab
+   - Click **Redeploy** on the latest deployment
+
+### Using Vercel CLI
+
+```bash
+# Update OpenRouter API Key
+vercel env add OPENROUTER_API_KEY production
+# Paste your real API key when prompted
+
+# Update Vercel CLIENT_SECRET
+vercel env add VERCEL_CLIENT_SECRET production
+# Paste your real Vercel client secret when prompted
+```
+
+### Variables That Need Updating
+
+| Variable | Current Value | What to Do | Priority |
+|----------|--------------|------------|----------|
+| `VERCEL_CLIENT_SECRET` | `vercel-client-secret-placeholder-optional` | Get from Vercel OAuth app settings | High |
+| `OPENROUTER_API_KEY` | `sk-or-placeholder-openrouter-key-optional` | Get from [openrouter.ai/keys](https://openrouter.ai/keys) | High |
+| `ANTHROPIC_API_KEY` | `sk-ant-your-anthropic-key-here` | Optional - for Claude agent | Low |
+| `OPENAI_API_KEY` | `sk-your-openai-key-here` | Optional - for Codex agent | Low |
+
+### Priority Levels
+
+- **High:** Required for full functionality (Vercel sign-in, AI agents)
+- **Low:** Optional - for additional AI providers
+
+### How to Get the Missing Keys
+
+**For Vercel OAuth CLIENT_SECRET:**
+1. Go to [Vercel Account Settings](https://vercel.com/account/tokens)
+2. Navigate to OAuth Applications
+3. Find your "Yousef Agent" OAuth app
+4. Copy the Client Secret
+
+**For OpenRouter API Key:**
+1. Sign up at [openrouter.ai](https://openrouter.ai/)
+2. Go to [openrouter.ai/keys](https://openrouter.ai/keys)
+3. Click "Create Key"
+4. Copy the key (starts with `sk-or-v1-`)
+
+---
 
 ## Troubleshooting
 

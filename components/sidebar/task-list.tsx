@@ -200,7 +200,7 @@ export function TaskList({
                             {task.status}
                           </Badge>
                         )}
-                        {task.progress !== undefined && task.progress > 0 && task.progress < 100 && (
+                        {task.progress !== null && task.progress !== undefined && task.progress > 0 && task.progress < 100 && (
                           <Badge variant="secondary" className="text-xs">
                             {task.progress}%
                           </Badge>

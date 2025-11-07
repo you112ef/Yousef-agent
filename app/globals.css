@@ -300,21 +300,23 @@ button {
 /* Modern Design System Utility Classes */
 
 /* Glassmorphism Utilities */
-.glass {
-  background: var(--glass-bg);
-  backdrop-filter: var(--glass-backdrop);
-  -webkit-backdrop-filter: var(--glass-backdrop);
-  border: 1px solid var(--glass-border);
-  box-shadow: var(--glass-shadow);
-}
+@layer utilities {
+  .glass {
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-backdrop);
+    -webkit-backdrop-filter: var(--glass-backdrop);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+  }
 
-.glass-card {
-  @apply glass rounded-xl;
-}
+  .glass-card {
+    @apply glass rounded-xl;
+  }
 
-.glass-button {
-  @apply glass rounded-lg;
-  transition: all var(--duration-normal) var(--ease-in-out-quart);
+  .glass-button {
+    @apply glass rounded-lg;
+    transition: all var(--duration-normal) var(--ease-in-out-quart);
+  }
 }
 
 .glass-button:hover {

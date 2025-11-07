@@ -15,7 +15,7 @@ import { Badge } from '@/components/ui/badge'
 import { Input } from '@/components/ui/input'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { TemplatesProvider, useTemplates } from './templates-provider'
-import { Search, Template, Clock, Bot } from 'lucide-react'
+import { Search, FileText, Clock, Bot } from 'lucide-react'
 import { useAtom } from 'jotai'
 import { taskPromptAtom } from '@/lib/atoms/task'
 import { lastSelectedAgentAtom, lastSelectedModelAtomFamily } from '@/lib/atoms/agent-selection'
@@ -64,7 +64,7 @@ function TemplateSelectorContent({ onTemplateSelect, trigger }: TemplateSelector
 
   const defaultTrigger = (
     <Button variant="outline" size="sm" className="glass-button">
-      <Template className="h-4 w-4 mr-2" />
+      <FileText className="h-4 w-4 mr-2" />
       Templates
     </Button>
   )

@@ -87,14 +87,14 @@ export const createConnectorSchema = z.object({
   oauthClientId: z.string().optional(),
   oauthClientSecret: z.string().optional(),
   command: z.string().optional(),
-  env: z.record(z.string()).optional(),
+  env: z.record(z.string(), z.string()).optional(),
 })
 
 export const updateConnectorSchema = z.object({
   name: z.string().min(1).max(100).optional(),
   description: z.string().max(500).optional(),
   status: z.enum(['connected', 'disconnected']).optional(),
-  env: z.record(z.string()).optional(),
+  env: z.record(z.string(), z.string()).optional(),
 })
 
 export const connectorIdSchema = z.object({
